@@ -2,8 +2,6 @@
 
 Status line for the **Antigravity CLI** (`agy`) — displays the active model, session context usage, working directory/git branch, and real-time quota consumption.
 
-![demo](./demo.png)
-
 ## What it shows
 
 ```

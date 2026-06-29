@@ -2,11 +2,9 @@
 
 Status line para **Antigravity CLI** (`agy`) — muestra modelo activo, contexto de sesión, directorio/rama git y cuotas de uso en tiempo real.
 
-![demo](./demo.png)
-
 ## Qué muestra
 
-```
+```text
 Claude Sonnet 4.6 (Thinking) │ ✍️  27% │ mi-proyecto (main*) │ Google AI Pro
 
 claude 5h ●●○○○○○○○○  21% ⟳ 20:40
@@ -62,11 +60,13 @@ agy-statusline/
 `agy` ejecuta el comando configurado en `statusLine` de `settings.json` y le pasa un JSON por stdin con el estado actual de la sesión. El script lo parsea y devuelve el texto formateado con colores ANSI.
 
 El archivo de configuración que se modifica es:
+
 ```
 ~/.gemini/antigravity-cli/settings.json
 ```
 
 Con:
+
 ```json
 "statusLine": {
   "type": "command",

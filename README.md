@@ -1,71 +1,69 @@
 # agy-statusline
 
-Status line para **Antigravity CLI** (`agy`) — muestra modelo activo, contexto de sesión, directorio/rama git y cuotas de uso en tiempo real.
+Status line for the **Antigravity CLI** (`agy`) — displays the active model, session context usage, working directory/git branch, and real-time quota consumption.
 
-## Qué muestra
+![demo](./demo.png)
 
-```text
-Claude Sonnet 4.6 (Thinking) │ ✍️  27% │ mi-proyecto (main*) │ Google AI Pro
+## What it shows
+
+```
+Claude Sonnet 4.6 (Thinking) │ ✍️  27% │ my-project (main*) │ Google AI Pro
 
 claude 5h ●●○○○○○○○○  21% ⟳ 20:40
 claude 7d ●○○○○○○○○○  16% ⟳ jul 4, 20:57
 ```
 
-| Campo | Descripción |
+| Field | Description |
 |-------|-------------|
-| Modelo | Modelo activo en la sesión |
-| `✍️ %` | Contexto de la sesión actual |
-| Directorio (rama*) | Directorio de trabajo + rama git (`*` = cambios sin commit) |
-| Plan | Tier de cuenta (Google AI Pro, etc.) |
-| `claude/gemini 5h` | Cuota de la ventana de 5 horas del pool activo |
-| `claude/gemini 7d` | Cuota semanal del pool activo |
+| Model | Active model for the current session |
+| `✍️ %` | Context window usage for the current session |
+| Directory (branch*) | Working directory + git branch (`*` = uncommitted changes) |
+| Plan | Account tier (Google AI Pro, etc.) |
+| `claude/gemini 5h` | 5-hour rolling quota for the active model pool |
+| `claude/gemini 7d` | Weekly quota for the active model pool |
 
-> La cuota que se muestra (`claude` o `gemini`) se detecta automáticamente según el modelo activo en la sesión.
+> The quota pool shown (`claude` or `gemini`) is automatically detected based on the active model — no configuration needed.
 
-## Requisitos
+## Requirements
 
-- [`jq`](https://jqlang.github.io/jq/) — para parsear JSON
-- `git` — para info de rama
-- `agy` (Antigravity CLI) instalado y configurado
+- [`jq`](https://jqlang.github.io/jq/) — for JSON parsing
+- `git` — for branch info
+- `agy` (Antigravity CLI) installed and configured
 
-## Instalación
+## Installation
 
 ```bash
-git clone https://github.com/tu-usuario/agy-statusline
+git clone https://github.com/your-username/agy-statusline
 cd agy-statusline
 bash bin/install.sh
 ```
 
-Reiniciá `agy` para ver el statusline.
+Restart `agy` to see the status line.
 
-## Desinstalación
+## Uninstall
 
 ```bash
 bash bin/uninstall.sh
 ```
 
-## Estructura
+This restores your previous statusline (if any) and removes the `statusLine` entry from `settings.json`.
+
+## Project structure
 
 ```
 agy-statusline/
 ├── bin/
-│   ├── statusline.sh   # Script principal (se copia a ~/.gemini/)
-│   ├── install.sh      # Instalador
-│   └── uninstall.sh    # Desinstalador
+│   ├── statusline.sh   # Main script (copied to ~/.gemini/)
+│   ├── install.sh      # Installer
+│   └── uninstall.sh    # Uninstaller
 └── README.md
 ```
 
-## Cómo funciona
+## How it works
 
-`agy` ejecuta el comando configurado en `statusLine` de `settings.json` y le pasa un JSON por stdin con el estado actual de la sesión. El script lo parsea y devuelve el texto formateado con colores ANSI.
+`agy` runs the command configured under `statusLine` in `settings.json`, passing the current session state as JSON via stdin. The script parses it and returns ANSI-colored text for the terminal.
 
-El archivo de configuración que se modifica es:
-
-```
-~/.gemini/antigravity-cli/settings.json
-```
-
-Con:
+The installer configures the following in `~/.gemini/antigravity-cli/settings.json`:
 
 ```json
 "statusLine": {
@@ -74,3 +72,5 @@ Con:
   "enabled": true
 }
 ```
+
+You can also toggle the status line at any time from within `agy` using `/statusline`.
